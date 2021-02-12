@@ -101,11 +101,11 @@ class Hanoi
     }
 
     isInitialPosition(){
-        return this.poles[2].length == 0 && this.poles[3].length == 0
+        return this.poles[1].length == numberOfDisks && this.poles[2].length == 0 && this.poles[3].length == 0
     }
 
     isFinalPosition(){
-        return this.poles[1].length == 0 && this.poles[2].length == 0
+        return this.poles[1].length == 0 && this.poles[2].length == 0 && this.poles[3].length == numberOfDisks
     }
 
 }
