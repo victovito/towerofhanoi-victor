@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Torre de Hanoi</title>
+    <style>
+        html, body{
+            margin: 0px;
+            overflow: hidden;
+        }
+        canvas {
+            margin: 0px;
+            position: absolute;
+            z-index: 0;
+        }
+        .hud {
+            position: absolute;
+        }
+        #numberOfDisks {
+            width: 100px;
+            height: 50px;
+            left: 50%;
+            margin-left: -50px;
+            margin-top: 10px;
+            top: 0%;
+            font-size: 20px;
+        }
+        #ndB {
+            width: 25px; height: 25px; position: inherit; top: 0%;
+            font-size: 20px;
+            text-align: center;
+            font-weight: bolder;
+            color: white;
+            z-index: 2;
+            background-color: transparent;
+            border-color: transparent;
+            outline: transparent;
+        }
+        #ndA {
+            position: inherit; width: 100%; text-align: center; top: 0%;
+            font-size: 20px;
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            text-align: center;
+            font-weight: bolder;
+            color: white;
+            z-index: 1;
+        }
+        #ndAB {
+            position: inherit; width: 100%; text-align: center; bottom: 0%;
+            font-size: 16px;
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            text-align: center;
+            font-weight: bolder;
+            color: white;
+            z-index: 1;
+            background-color: transparent;
+            border-color: transparent;
+            outline: transparent;
+        }
+        #bottom {
+            width: 200px;
+            height: 50px;
+            left: 50%;
+            margin-left: -100px;
+            margin-bottom: 10px;
+            bottom: 0%;
+        }
+        .bottomButton {
+            width: 100%; height: 100%; left: 0%; position: inherit;
+            font-size: 18px;
+            text-align: center;
+            font-weight: bolder;
+            color: white;
+            z-index: 2;
+            background-color: transparent;
+            border-color: transparent;
+            outline: transparent;
+        }
+
+    </style>
+</head>
+<body onload="start()">
+    <canvas id="canvas"></canvas>
+    <script src="main.js"></script>
+    <script src="utils.js"></script>
+    <script src="game.js"></script>
+    <script src="solver.js"></script>
+    <div class="hud" id="numberOfDisks">
+        <button id="ndB" style="left: 0%" onclick="changeNoD(-1)">-</button>
+        <a id="ndA">3</a>
+        <button id="ndB" style="right: 0%" onclick="changeNoD(1)">+</button>
+        <button id="ndAB" onclick="reloadHanoi()">Aplicar</button>
+    </div>
+    <div class="hud" id="bottom">
+        <button class="bottomButton" id="solveButton" onclick="Solver.main.solve()">Resolver</button>
+        <button class="bottomButton" id="resetButton" onclick="Hanoi.main.setHanoi()">Resetar</button>
+    </div>
+</body>
+</html>
