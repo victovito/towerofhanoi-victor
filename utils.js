@@ -8,8 +8,12 @@ function lerp (start, end, amt){
     return (1-amt)*start+amt*end;
 }
 
+function clamp (value, min, max){
+    return Math.min(Math.max(min, value), max);
+}
+
 function changeNoD(value){
-    editNoD = Math.min(Math.max(1, editNoD + value), 15);
+    editNoD = clamp(editNoD + value, 1, 15);
 }
 
 function reloadHanoi(){
@@ -26,6 +30,10 @@ class Vector2
         this.y = y;
     }
 
+    static random(){
+        return new Vector2(Math.random() * 2 - 1, Math.random() * 2 - 1);
+    }
+
     add(vector2){
         return new Vector2(this.x + vector2.x, this.y + vector2.y);
     }
@@ -36,6 +44,14 @@ class Vector2
 
     scale(factor){
         return new Vector2(this.x * factor, this.y * factor);
+    }
+
+    magnitude(){
+        return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+    }
+
+    normalized(){
+        return this.scale(1 / this.magnitude());
     }
 
 }

@@ -47,6 +47,7 @@ function update(){
     if (controlls.selectedDisk){
         controlls.selectedDisk.draw();
     }
+    Confetti.updateConfettis();
 
     requestAnimationFrame(update);
 }
@@ -72,6 +73,15 @@ function setListeners(){
             if (pole != null){
                 if (Hanoi.main.placeDisk(controlls.selectedDisk, pole)){
                     controlls.selectedDisk = null;
+
+                    document.getElementById("woodsfx").pause();
+                    document.getElementById("woodsfx").currentTime = 0;
+                    document.getElementById("woodsfx").play();
+                    
+                    if (Hanoi.main.isFinalPosition()){
+                        document.getElementById("partyhorn").play()
+                        Confetti.start();
+                    }
                     return;
                 }
             }
