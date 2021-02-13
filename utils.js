@@ -18,9 +18,14 @@ function changeNoD(value){
 
 function reloadHanoi(){
     let url = new URL(document.location);
-    url.search = "";
+    url.searchParams.delete("n");
     url.searchParams.append("n", editNoD);
     document.location.assign(url);
+}
+
+function getParam(name, defaultValue){
+    const param = new URL(document.URL).searchParams.get(name);
+    return param ? parseInt(param) : defaultValue
 }
 
 class Vector2

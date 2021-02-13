@@ -3,9 +3,13 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-const urlParamN = new URL(document.URL).searchParams.get("n");
-const numberOfDisks = urlParamN ? parseInt(urlParamN) : 3;
+const numberOfDisks = getParam("n", 3);
 let editNoD = numberOfDisks;
+
+const config = {
+    useTimer: getParam("timer", 0),
+    confettis: getParam("confetti", 1),
+}
 
 const controlls = {
     selectedDisk: null,
@@ -58,6 +62,9 @@ function setListeners(){
             if (!controlls.selectedDisk){
                 const pole = Hanoi.main.getPoleOnPoint(new Vector2(e.x, e.y));
                 if (pole != null){
+                    if (Timer.config.interval == null && Hanoi.main.isInitialPosition()){
+                        Timer.start();
+                    }
                     controlls.selectedDisk = Hanoi.main.removeDisk(pole);
                     if (!controlls.selectedDisk) return;
                     controlls.selectedDisk.position = new Vector2(e.x, e.y);
@@ -77,11 +84,15 @@ function setListeners(){
                     document.getElementById("woodsfx").pause();
                     document.getElementById("woodsfx").currentTime = 0;
                     document.getElementById("woodsfx").play();
-                    
+
                     if (Hanoi.main.isFinalPosition()){
-                        document.getElementById("partyhorn").play()
+                        Timer.stop();
                         Confetti.start();
                     }
+                    if (Hanoi.main.isInitialPosition()){
+                        Timer.reset();
+                    }
+
                     return;
                 }
             }

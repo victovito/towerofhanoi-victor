@@ -76,13 +76,25 @@
             border-color: transparent;
             outline: transparent;
         }
+        #timer {
+            position: absolute;
+            width: 100%;
+            height: 75px;
+            pointer-events: none;
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            text-align: center;
+            font-weight: bolder;
+            color: white;
+            z-index: 2;
+            font-size: 18px;
+        }
 
     </style>
 </head>
 <body onload="start()">
     <canvas id="canvas"></canvas>
-    <script src="main.js"></script>
     <script src="utils.js"></script>
+    <script src="main.js"></script>
     <script src="game.js"></script>
     <script src="solver.js"></script>
     <audio src="woodsfx.mp3" id="woodsfx" style="display: none;"></audio>
@@ -97,5 +109,6 @@
         <button class="bottomButton" id="solveButton" onclick="Solver.main.solve()">Resolver</button>
         <button class="bottomButton" id="resetButton" onclick="Hanoi.main.setHanoi()">Resetar</button>
     </div>
+    <div id="timer"></div>
 </body>
 </html>

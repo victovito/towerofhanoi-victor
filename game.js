@@ -28,6 +28,7 @@ class Hanoi
             );
         }
         Solver.main.stop();
+        Timer.reset();
     }
 
     move(originIndex, destinyIndex){
@@ -179,6 +180,10 @@ class Confetti
     }
 
     static start(){
+        if (config.confettis < 1){
+            return;
+        }
+        document.getElementById("partyhorn").play();
         Confetti.stop();
         Confetti.config.interval = setInterval(Confetti.controllConfettis, Confetti.config.delay);
     }
@@ -226,6 +231,52 @@ class Confetti
         // ctx.fillRect(this.position.x - this.size / 2, this.position.y - this.size / 2, this.size, this.size);
         ctx.globalAlpha = 1;
         ctx.resetTransform();
+    }
+
+}
+
+class Timer
+{
+
+    static start(){
+        if (config.useTimer < 1){
+            return;
+        }
+        Timer.reset();
+        Timer.config.start = Date.now();
+        Timer.config.interval = setInterval(Timer.update, 1);
+    }
+
+    static stop(){
+        clearInterval(Timer.config.interval);
+        Timer.config.interval = null;
+    }
+
+    static reset(){
+        Timer.stop();
+        Timer.time = 0;
+        document.getElementById("timer").innerHTML = "";
+    }
+
+    static update(){
+        Timer.time = Date.now() - Timer.config.start;
+        const element = document.getElementById("timer");
+        element.innerHTML = Timer.format();
+        element.style.top = `${Hanoi.main.position.y + 30}px`;
+    }
+
+    static config = {
+        interval: null,
+        start: 0,
+    }
+
+    static time = 0;
+
+    static format(){
+        const min = Math.floor(Timer.time / 1000 / 60);
+        const sec = Math.floor(Timer.time / 1000) - min * 60;
+        const ms = Timer.time - sec * 1000;
+        return `${min.toString().padStart(2, "0")}:${sec.toString().padStart(2, "0")}.${ms.toString().padStart(3, "0")}`;
     }
 
 }
