@@ -112,34 +112,50 @@ function setListeners(){
     });
 
     document.addEventListener("keydown", (e) => {
-        if (controlls.mouseSelectedDisk){
-            return;
-        }
-        const evaluation = /1|2|3/.exec(e.key);
-        if (evaluation && evaluation.index == 0){
-            const pole = parseInt(e.key);
-            if (!controlls.keySelectedDisk){
-                if (Timer.config.interval == null && Hanoi.main.isInitialPosition()){
-                    Timer.start();
-                }
-                controlls.keySelectedDisk = Hanoi.main.removeDisk(pole);
-                if (!controlls.keySelectedDisk) return;
-                controlls.keySelectedDisk.position.y = 
-                Hanoi.main.position.y - Hanoi.main.size.y - 25 - Hanoi.main.diskHeight / 2;
-                controlls.lastPole = pole;
-                Solver.main.stop();
-            } else {
-                if (Hanoi.main.placeDisk(controlls.keySelectedDisk, pole)){
-                    controlls.keySelectedDisk = null;
-
-                    playSound("woodsfx", 1, true);
-
-                    if (Hanoi.main.isFinalPosition()){
-                        Timer.stop();
-                        Confetti.start();
+        // if (e.key == "r"){
+        //     Hanoi.main.setHanoi();
+        // }
+        if (!controlls.mouseSelectedDisk){
+            const evaluation = /1|2|3/.exec(e.key);
+            if (evaluation && evaluation.index == 0){
+                const pole = parseInt(e.key);
+                if (!controlls.keySelectedDisk){
+                    if (Hanoi.main.poles[pole].length > 0){
+                        if (Timer.config.interval == null && Hanoi.main.isInitialPosition()){
+                            Timer.start();
+                        }
                     }
-                    if (Hanoi.main.isInitialPosition()){
-                        Timer.reset();
+                    controlls.keySelectedDisk = Hanoi.main.removeDisk(pole);
+                    if (!controlls.keySelectedDisk) return;
+
+                    controlls.keySelectedDisk.position.y = 
+                        Hanoi.main.position.y - Hanoi.main.size.y - 25 - Hanoi.main.diskHeight / 2;
+                    controlls.lastPole = pole;
+                    Solver.main.stop();
+                } else {
+                    if (Hanoi.main.placeDisk(controlls.keySelectedDisk, pole)){
+                        controlls.keySelectedDisk = null;
+
+                        playSound("woodsfx", 1, true);
+
+                        if (Hanoi.main.isFinalPosition()){
+                            Timer.stop();
+                            Confetti.start();
+                        }
+                        if (Hanoi.main.isInitialPosition()){
+                            Timer.reset();
+                        }
+                    } else {
+                        const newDisk = Hanoi.main.removeDisk(pole);
+                        if (!newDisk) return;
+
+                        playSound("woodsfx", 1, true);
+
+                        Hanoi.main.placeDisk(controlls.keySelectedDisk, controlls.lastPole);
+                        controlls.keySelectedDisk = newDisk;
+                        controlls.keySelectedDisk.position.y = 
+                            Hanoi.main.position.y - Hanoi.main.size.y - 25 - Hanoi.main.diskHeight / 2;
+                        controlls.lastPole = pole;
                     }
                 }
             }
