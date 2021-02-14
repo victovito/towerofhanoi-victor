@@ -261,7 +261,7 @@ class Timer
     static update(){
         Timer.time = Date.now() - Timer.config.start;
         const element = document.getElementById("timer");
-        element.innerHTML = Timer.format();
+        element.innerHTML = Timer.format(Timer.time);
         element.style.top = `${Hanoi.main.position.y + 30}px`;
     }
 
@@ -272,10 +272,10 @@ class Timer
 
     static time = 0;
 
-    static format(){
-        const min = Math.floor(Timer.time / 1000 / 60);
-        const sec = Math.floor(Timer.time / 1000) - min * 60;
-        const ms = Timer.time - sec * 1000;
+    static format(time){
+        const min = Math.floor(time / 1000 / 60);
+        const sec = Math.floor(time / 1000) - min * 60;
+        const ms = time - min * 1000 * 60 - sec * 1000;
         return `${min.toString().padStart(2, "0")}:${sec.toString().padStart(2, "0")}.${ms.toString().padStart(3, "0")}`;
     }
 
