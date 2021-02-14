@@ -29,6 +29,7 @@ class Hanoi
         }
         Solver.main.stop();
         Timer.reset();
+        controlls.keySelectedDisk = null;
     }
 
     move(originIndex, destinyIndex){
