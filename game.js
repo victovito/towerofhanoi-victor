@@ -183,7 +183,7 @@ class Confetti
         if (config.confettis < 1){
             return;
         }
-        playSound("partyhorn", 0.5, false);
+        playSound("partyhorn", 0.5, true);
         Confetti.stop();
         Confetti.config.interval = setInterval(Confetti.controllConfettis, Confetti.config.delay);
     }

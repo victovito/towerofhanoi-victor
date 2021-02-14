@@ -7,7 +7,7 @@ const numberOfDisks = getParam("n", 3);
 let editNoD = numberOfDisks;
 
 const config = {
-    useTimer: getParam("timer", 0),
+    useTimer: getParam("timer", 1),
     confettis: getParam("confetti", 1),
 }
 
