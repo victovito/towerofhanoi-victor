@@ -112,9 +112,10 @@ function setListeners(){
     });
 
     document.addEventListener("keydown", (e) => {
-        // if (e.key == "r"){
-        //     Hanoi.main.setHanoi();
-        // }
+        if (e.key == "r"){
+            Hanoi.main.setHanoi();
+        }
+
         if (!controlls.mouseSelectedDisk){
             const evaluation = /1|2|3/.exec(e.key);
             if (evaluation && evaluation.index == 0){
