@@ -28,6 +28,16 @@ function getParam(name, defaultValue){
     return param ? parseInt(param) : defaultValue
 }
 
+function playSound(name, volume = 1, force = false){
+    const audio = document.getElementById(name);
+    if (force){
+        audio.pause();
+        audio.currentTime = 0;
+    }
+    audio.volume = volume;
+    audio.play();
+}
+
 class Vector2
 {
     constructor(x = 0, y = 0){

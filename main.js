@@ -81,9 +81,7 @@ function setListeners(){
                 if (Hanoi.main.placeDisk(controlls.selectedDisk, pole)){
                     controlls.selectedDisk = null;
 
-                    document.getElementById("woodsfx").pause();
-                    document.getElementById("woodsfx").currentTime = 0;
-                    document.getElementById("woodsfx").play();
+                    playSound("woodsfx", 1, true);
 
                     if (Hanoi.main.isFinalPosition()){
                         Timer.stop();

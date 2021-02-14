@@ -183,7 +183,7 @@ class Confetti
         if (config.confettis < 1){
             return;
         }
-        document.getElementById("partyhorn").play();
+        playSound("partyhorn", 0.5, false);
         Confetti.stop();
         Confetti.config.interval = setInterval(Confetti.controllConfettis, Confetti.config.delay);
     }

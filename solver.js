@@ -34,6 +34,7 @@ class Solver
         }
         const move = Solver.main.moves[Solver.main.step++];
         Hanoi.main.move(move.x, move.y);
+        playSound("woodsfx");
     }
 
     stop(){
