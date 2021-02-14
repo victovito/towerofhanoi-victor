@@ -78,15 +78,16 @@ class Hanoi
     }
 
     drawDisk(poleIndex, disk, diskIndex){
-        const pole = this.poles[poleIndex];
         const size = new Vector2(lerp(this.minDiskWidth, this.maxDiskWidth, disk.size / numberOfDisks), this.diskHeight);
-        let position = new Vector2(
+        const position = new Vector2(
             (this.position.x - this.size.x / 2) + (poleIndex - 1) * (this.size.x / 2),
             this.position.y - (diskIndex * this.diskHeight)
         );
         ctx.beginPath();
         ctx.fillStyle = disk.color;
         ctx.fillRect(position.x - size.x / 2, position.y - size.y / 2, size.x , size.y);
+
+        disk.position = position;
     }
 
     reposSystem(){

@@ -12,7 +12,8 @@ const config = {
 }
 
 const controlls = {
-    selectedDisk: null,
+    mouseSelectedDisk: null,
+    keySelectedDisk: null,
     lastPole: null,
 };
 
@@ -48,8 +49,11 @@ function update(){
     ctx.fillStyle = "#2a2a2a";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     Hanoi.main.draw();
-    if (controlls.selectedDisk){
-        controlls.selectedDisk.draw();
+    if (controlls.mouseSelectedDisk){
+        controlls.mouseSelectedDisk.draw();
+    }
+    if (controlls.keySelectedDisk){
+        controlls.keySelectedDisk.draw();
     }
     Confetti.updateConfettis();
 
@@ -58,16 +62,19 @@ function update(){
 
 function setListeners(){
     document.addEventListener("mousedown", (e) => {
+        if (controlls.keySelectedDisk){
+            return;
+        }
         if (e.button == 0){
-            if (!controlls.selectedDisk){
+            if (!controlls.mouseSelectedDisk){
                 const pole = Hanoi.main.getPoleOnPoint(new Vector2(e.x, e.y));
                 if (pole != null){
                     if (Timer.config.interval == null && Hanoi.main.isInitialPosition()){
                         Timer.start();
                     }
-                    controlls.selectedDisk = Hanoi.main.removeDisk(pole);
-                    if (!controlls.selectedDisk) return;
-                    controlls.selectedDisk.position = new Vector2(e.x, e.y);
+                    controlls.mouseSelectedDisk = Hanoi.main.removeDisk(pole);
+                    if (!controlls.mouseSelectedDisk) return;
+                    controlls.mouseSelectedDisk.position = new Vector2(e.x, e.y);
                     controlls.lastPole = pole;
                     Solver.main.stop();
                 }
@@ -75,11 +82,11 @@ function setListeners(){
         }
     });
     document.addEventListener("mouseup", (e) => {
-        if (controlls.selectedDisk){
+        if (controlls.mouseSelectedDisk){
             const pole = Hanoi.main.getPoleOnPoint(new Vector2(e.x, e.y));
             if (pole != null){
-                if (Hanoi.main.placeDisk(controlls.selectedDisk, pole)){
-                    controlls.selectedDisk = null;
+                if (Hanoi.main.placeDisk(controlls.mouseSelectedDisk, pole)){
+                    controlls.mouseSelectedDisk = null;
 
                     playSound("woodsfx", 1, true);
 
@@ -94,13 +101,48 @@ function setListeners(){
                     return;
                 }
             }
-            Hanoi.main.placeDisk(controlls.selectedDisk, controlls.lastPole);
-            controlls.selectedDisk = null;
+            Hanoi.main.placeDisk(controlls.mouseSelectedDisk, controlls.lastPole);
+            controlls.mouseSelectedDisk = null;
         }
     });
     document.addEventListener("mousemove", (e) => {
-        if (controlls.selectedDisk){
-            controlls.selectedDisk.position = new Vector2(e.x, e.y);
+        if (controlls.mouseSelectedDisk){
+            controlls.mouseSelectedDisk.position = new Vector2(e.x, e.y);
+        }
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (controlls.mouseSelectedDisk){
+            return;
+        }
+        const evaluation = /1|2|3/.exec(e.key);
+        if (evaluation && evaluation.index == 0){
+            const pole = parseInt(e.key);
+            if (!controlls.keySelectedDisk){
+                if (Timer.config.interval == null && Hanoi.main.isInitialPosition()){
+                    Timer.start();
+                }
+                controlls.keySelectedDisk = Hanoi.main.removeDisk(pole);
+                if (!controlls.keySelectedDisk) return;
+                controlls.keySelectedDisk.position.y = 
+                Hanoi.main.position.y - Hanoi.main.size.y - 25 - Hanoi.main.diskHeight / 2;
+                controlls.lastPole = pole;
+                Solver.main.stop();
+            } else {
+                if (Hanoi.main.placeDisk(controlls.keySelectedDisk, pole)){
+                    controlls.keySelectedDisk = null;
+
+                    playSound("woodsfx", 1, true);
+
+                    if (Hanoi.main.isFinalPosition()){
+                        Timer.stop();
+                        Confetti.start();
+                    }
+                    if (Hanoi.main.isInitialPosition()){
+                        Timer.reset();
+                    }
+                }
+            }
         }
     });
 }
