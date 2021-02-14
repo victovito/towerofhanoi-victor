@@ -273,10 +273,16 @@ class Timer
     static time = 0;
 
     static format(time){
-        const min = Math.floor(time / 1000 / 60);
-        const sec = Math.floor(time / 1000) - min * 60;
-        const ms = time - min * 1000 * 60 - sec * 1000;
-        return `${min.toString().padStart(2, "0")}:${sec.toString().padStart(2, "0")}.${ms.toString().padStart(3, "0")}`;
+        time = Math.abs(time);
+        const hr = Math.floor(time / 1000 / 60 / 60);
+        const min = Math.floor(time / 1000 / 60) - hr * 60;
+        const sec = Math.floor(time / 1000) - hr * 60 * 60 - min * 60;
+        const ms = time - hr * 1000 * 60 * 60 - min * 1000 * 60 - sec * 1000;
+        let result = `${min.toString().padStart(2, "0")}:${sec.toString().padStart(2, "0")}.${ms.toString().padStart(3, "0")}`;
+        if (hr != 0){
+            result = `${hr.toString().padStart(2, "0")}:` + result;
+        }
+        return result;
     }
 
 }

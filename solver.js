@@ -29,12 +29,16 @@ class Solver
 
     move(){
         if (Solver.main.step == Solver.main.moves.length){
+            Confetti.start();
             Solver.main.stop();
             return;
         }
         const move = Solver.main.moves[Solver.main.step++];
         Hanoi.main.move(move.x, move.y);
-        playSound("woodsfx");
+        if (Solver.main.moves.length < 100){
+        } else {
+            playSound("woodsfx", 1, false);
+        }
     }
 
     stop(){
