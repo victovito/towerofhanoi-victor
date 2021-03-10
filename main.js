@@ -25,6 +25,8 @@ function start(){
 
     setListeners();
 
+    About.setAbout();
+
     requestAnimationFrame(update);
 }
 

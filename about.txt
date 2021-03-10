@@ -1,0 +1,17 @@
+<hr>
+<p style="text-align: center; margin-top: 0px; margin-bottom: 0px"> Torre de Hanói </p>
+
+    A Torre de Hanói é um desafio matemático que consiste de três hastes e um dado número de discos. O objetivo é mover todos os discos da primeira haste para a última haste. Existe apenas uma regra: os discos devem estar sempre em ordem crescente, ou seja, discos menores sempre estarão acima de discos maiores.
+    É possível resolver este desafio com qualquer quantidade de discos.
+
+<hr>
+Controles:
+
+    Segurar o botão esquerdo: arrasta um disco.
+    R: Reinicia o desafio.
+    Teclas 1, 2 e 3: Selecionam ou empilham um disco.
+
+    Para mudar a quantidade de discos, é necessário clicar em aplicar (parte superior).
+
+<hr>
+<p style="text-align: right; margin-bottom: 0px;">by Vito</p>
